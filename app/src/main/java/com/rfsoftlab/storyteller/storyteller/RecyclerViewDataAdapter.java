@@ -1,0 +1,64 @@
+package com.rfsoftlab.storyteller.storyteller;
+
+import android.content.Context;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class RecyclerViewDataAdapter  extends RecyclerView.Adapter<RecyclerViewDataAdapter.MyViewHolder> {
+
+    private LayoutInflater inflater;
+    private ArrayList<FruitModel> imageModelArrayList;
+
+    public RecyclerViewDataAdapter(Context ctx, ArrayList<FruitModel> imageModelArrayList){
+
+        inflater = LayoutInflater.from(ctx);
+        this.imageModelArrayList = imageModelArrayList;
+    }
+
+    @Override
+    public RecyclerViewDataAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View view = inflater.inflate(R.layout.list_single_card, parent, false);
+        MyViewHolder holder = new MyViewHolder(view);
+
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerViewDataAdapter.MyViewHolder holder, int position) {
+
+        holder.iv.setImageResource(imageModelArrayList.get(position).getImage_drawable());
+        holder.time.setText(imageModelArrayList.get(position).getName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return imageModelArrayList.size();
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder{
+
+        TextView time;
+        CircleImageView iv;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+
+            time = (TextView) itemView.findViewById(R.id.tv);
+            iv = (CircleImageView) itemView.findViewById(R.id.iv);
+        }
+
+    }
+}
