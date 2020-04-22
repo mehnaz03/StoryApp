@@ -1,4 +1,4 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
@@ -13,16 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ViewHolder> {
+public class RelatedStoryAdapter extends RecyclerView.Adapter<RelatedStoryAdapter.ViewHolder> {
     private String[] mData = new String[0];
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     Context context;
     // data is passed into the constructor
-    public DashboardAdapter(Context context, String[] data) {
+    public RelatedStoryAdapter(Context context, String[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
-        this.context= context;
+        this.context=context;
     }
 
     // inflates the cell layout from xml when needed
@@ -37,7 +37,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         String animal = mData[position];
         holder.myTextView.setText(animal);
-        holder.mImageButton.setOnClickListener(new View.OnClickListener() {
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopupMenu(v);
@@ -55,11 +55,11 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-        ImageView  mImageButton;
+        ImageView imageView;
         ViewHolder(View itemView) {
             super(itemView);
             myTextView =(TextView) itemView.findViewById(R.id.tvTitle);
-            mImageButton=(ImageView) itemView.findViewById(R.id.imageView3);
+             imageView=(ImageView) itemView.findViewById(R.id.imageView3);
             itemView.setOnClickListener(this);
         }
 
@@ -75,7 +75,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
     }
 
     // allows clicks events to be caught
-    public void setClickListener(DashboardAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(RelatedStoryAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
@@ -91,7 +91,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
         PopupMenu popup = new PopupMenu(context,view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.dropdown_menu, popup.getMenu());
-        popup.setOnMenuItemClickListener(new DashboardAdapter.MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new RelatedStoryAdapter.MyMenuItemClickListener());
         popup.show();
     }
 

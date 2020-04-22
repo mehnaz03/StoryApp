@@ -1,4 +1,4 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -16,15 +16,14 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EducationalActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
-
+public class FavoriteActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.recyclerview)
     RecyclerView listView;
-    private EducationalAdapter adapter;
+    private FavoriteAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_educational);
+        setContentView(R.layout.activity_favorite);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
@@ -44,7 +43,7 @@ public class EducationalActivity extends AppCompatActivity  implements Navigatio
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
         successResult();
     }
     private void successResult()
@@ -52,12 +51,12 @@ public class EducationalActivity extends AppCompatActivity  implements Navigatio
         // data to populate the RecyclerView with
         //  String[] data = {"Bousorama", "Bousorama", "Bousorama"};
 
-        String[] data = {"Educational", "Motivational", "Tragedy","Comedy"};
+        String[] data = {"Gopal Var", "Humpty Dumpty", "Three little pigs","Sleeping Beauty"};
 
 
         int numberOfRows = 1;
         listView.setLayoutManager(new GridLayoutManager(this, numberOfRows));
-        adapter = new EducationalAdapter(this, data);
+        adapter = new FavoriteAdapter(this, data);
         listView.setAdapter(adapter);
 
 
@@ -151,4 +150,10 @@ public class EducationalActivity extends AppCompatActivity  implements Navigatio
         return true;
     }
 
+
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
 }

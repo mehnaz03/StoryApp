@@ -1,4 +1,4 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -12,19 +12,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategoriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,CategoriesAdapter.ItemClickListener {
+public class EducationalActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+
     @BindView(R.id.recyclerview)
     RecyclerView listView;
-    private CategoriesAdapter adapter;
+    private EducationalAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.activity_educational);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
@@ -57,8 +57,7 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
 
         int numberOfRows = 1;
         listView.setLayoutManager(new GridLayoutManager(this, numberOfRows));
-        adapter = new CategoriesAdapter(this, data);
-        adapter.setClickListener(this);
+        adapter = new EducationalAdapter(this, data);
         listView.setAdapter(adapter);
 
 
@@ -86,7 +85,9 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-      
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -100,7 +101,7 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
@@ -114,7 +115,8 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
             Intent intent = new Intent(this,CategoriesActivity.class);
             this.startActivity(intent);
         } else if (id == R.id.nav_search) {
-
+            Intent intent = new Intent(this,SearchActivity.class);
+            this.startActivity(intent);
         } else if (id == R.id.nav_favorite) {
             Intent intent = new Intent(this,FavoriteActivity.class);
             this.startActivity(intent);
@@ -149,10 +151,4 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         return true;
     }
 
-
-    @Override
-    public void onItemClick(View view, int position) {
-        Intent intent = new Intent(this,EducationalActivity.class);
-        this.startActivity(intent);
-    }
 }

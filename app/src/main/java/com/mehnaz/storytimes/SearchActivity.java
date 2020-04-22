@@ -1,42 +1,79 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
+
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class SeriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.recyclerview)
-    RecyclerView listView;
-       SeriesAdapter adapter;
-    ArrayList<FruitModel> allSampleData;
-
-    ArrayList<FruitModel> imageModelArrayList;
+public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private int[] myImageList = new int[]{R.drawable.apple, R.drawable.mango,R.drawable.straw, R.drawable.pineapple,R.drawable.orange,R.drawable.blue,R.drawable.water};
-    private String[] myImageNameList = new String[]{"Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry","Watermelon"};
+    SearchView searchView;
+    ListView listView;
+    ArrayList<String> listItems;
+   ArrayAdapter<String> adapter;
+ //SearchAdapter adapter;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_series);
+        setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        searchView = (SearchView) findViewById(R.id.searchView);
+        listView = (ListView) findViewById(R.id.lv1);
+
+        listItems = new ArrayList<>();
+        listItems.add("Apple");
+        listItems.add("Banana");
+        listItems.add("Pineapple");
+        listItems.add("Orange");
+        listItems.add("Lychee");
+        listItems.add("Guava");
+        listItems.add("Peach");
+        listItems.add("Melon");
+        listItems.add("Watermelon");
+        listItems.add("Papaya");
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listItems);
+        listView.setAdapter(adapter);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                if(listItems.contains(query)){
+                    adapter.getFilter().filter(query);
+                    listView.setVisibility(View.VISIBLE);
+                }else{
+                    Toast.makeText(SearchActivity.this, "No Match found",Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                    adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -45,62 +82,17 @@ public class SeriesActivity extends AppCompatActivity implements NavigationView.
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        ButterKnife.bind(this);
-        successResult();
-
-
     }
-    private void successResult()
-    {
-        // data to populate the RecyclerView with
-        //  String[] data = {"Bousorama", "Bousorama", "Bousorama"};
 
-
-        imageModelArrayList = eatFruits();
-        adapter = new SeriesAdapter(this, imageModelArrayList);
-        listView.setAdapter(adapter);
-        listView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
-
-
-
-
-
-        //  createDummyData();
-
-        allSampleData = eatFruits();
-        RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.recyclerviewParent);
-        RecyclerViewDataAdapter adapter = new RecyclerViewDataAdapter(this, allSampleData);
-        my_recycler_view.setAdapter(adapter);
-        my_recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        allSampleData = eatFruits();
-        RecyclerView my_recycler_view2 = (RecyclerView) findViewById(R.id.recyclerviewParent3);
-        RecyclerViewDataAdapter adapter2 = new RecyclerViewDataAdapter(this, allSampleData);
-        my_recycler_view2.setAdapter(adapter2);
-        my_recycler_view2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        allSampleData = eatFruits();
-        RecyclerView my_recycler_view3 = (RecyclerView) findViewById(R.id.recyclerviewParent4);
-        RecyclerViewDataAdapter adapter3 = new RecyclerViewDataAdapter(this, allSampleData);
-        my_recycler_view3.setAdapter(adapter3);
-        my_recycler_view3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-    }
-    private ArrayList<FruitModel> eatFruits(){
-
-        ArrayList<FruitModel> list = new ArrayList<>();
-
-        for(int i = 0; i < 7; i++){
-            FruitModel fruitModel = new FruitModel();
-            fruitModel.setName(myImageNameList[i]);
-            fruitModel.setImage_drawable(myImageList[i]);
-            list.add(fruitModel);
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
-
-        return list;
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,7 +103,9 @@ public class SeriesActivity extends AppCompatActivity implements NavigationView.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -125,7 +119,7 @@ public class SeriesActivity extends AppCompatActivity implements NavigationView.
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
@@ -148,7 +142,6 @@ public class SeriesActivity extends AppCompatActivity implements NavigationView.
 
 
         } else if (id == R.id.nav_share) {
-
             try {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
@@ -174,10 +167,5 @@ public class SeriesActivity extends AppCompatActivity implements NavigationView.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 }

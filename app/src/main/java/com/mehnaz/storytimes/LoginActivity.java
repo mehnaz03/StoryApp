@@ -1,4 +1,4 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

@@ -1,80 +1,105 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
-import java.util.Objects;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,RelatedStoryAdapter.ItemClickListener, View.OnClickListener {
-    @BindView(R.id.recyclerviewStory)
+public class SeriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    @BindView(R.id.recyclerview)
     RecyclerView listView;
+       SeriesAdapter adapter;
+    ArrayList<FruitModel> allSampleData;
+
+    ArrayList<FruitModel> imageModelArrayList;
 
 
-    @BindView(R.id.imageViewPlay)
-    ImageView videoPlay;
-    RelatedStoryAdapter adapter;
-    @SuppressLint("RestrictedApi")
+    private int[] myImageList = new int[]{R.drawable.apple, R.drawable.mango,R.drawable.straw, R.drawable.pineapple,R.drawable.orange,R.drawable.blue,R.drawable.water};
+    private String[] myImageNameList = new String[]{"Apple","Mango" ,"Strawberry","Pineapple","Orange","Blueberry","Watermelon"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_story);
-        ButterKnife.bind(this);
-
+        setContentView(R.layout.activity_series);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
+        setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        toggle.setDrawerIndicatorEnabled(false);
-        toggle.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),DashBoardActivity.class);
-                startActivity(intent);
-            }
+        ButterKnife.bind(this);
+        successResult();
 
-        });
 
-        option();
     }
-
-
-    private void option()
+    private void successResult()
     {
-        String[] data = {"Hello World", "Gopal Var"};
-        int numberOfRows = 1;
-        listView.setLayoutManager(new GridLayoutManager(this, numberOfRows));
-        adapter = new RelatedStoryAdapter(this, data);
-        adapter.setClickListener((RelatedStoryAdapter.ItemClickListener) this);
-        listView.setAdapter(adapter);
+        // data to populate the RecyclerView with
+        //  String[] data = {"Bousorama", "Bousorama", "Bousorama"};
 
-        videoPlay.setOnClickListener((View.OnClickListener) this);
+
+        imageModelArrayList = eatFruits();
+        adapter = new SeriesAdapter(this, imageModelArrayList);
+        listView.setAdapter(adapter);
+        listView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+
+
+
+
+
+        //  createDummyData();
+
+        allSampleData = eatFruits();
+        RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.recyclerviewParent);
+        RecyclerViewDataAdapter adapter = new RecyclerViewDataAdapter(this, allSampleData);
+        my_recycler_view.setAdapter(adapter);
+        my_recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        allSampleData = eatFruits();
+        RecyclerView my_recycler_view2 = (RecyclerView) findViewById(R.id.recyclerviewParent3);
+        RecyclerViewDataAdapter adapter2 = new RecyclerViewDataAdapter(this, allSampleData);
+        my_recycler_view2.setAdapter(adapter2);
+        my_recycler_view2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        allSampleData = eatFruits();
+        RecyclerView my_recycler_view3 = (RecyclerView) findViewById(R.id.recyclerviewParent4);
+        RecyclerViewDataAdapter adapter3 = new RecyclerViewDataAdapter(this, allSampleData);
+        my_recycler_view3.setAdapter(adapter3);
+        my_recycler_view3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
     }
+    private ArrayList<FruitModel> eatFruits(){
+
+        ArrayList<FruitModel> list = new ArrayList<>();
+
+        for(int i = 0; i < 7; i++){
+            FruitModel fruitModel = new FruitModel();
+            fruitModel.setName(myImageNameList[i]);
+            fruitModel.setImage_drawable(myImageList[i]);
+            list.add(fruitModel);
+        }
+
+        return list;
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -84,9 +109,7 @@ public class StoryActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -123,6 +146,7 @@ public class StoryActivity extends AppCompatActivity implements NavigationView.O
 
 
         } else if (id == R.id.nav_share) {
+
             try {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
@@ -151,13 +175,7 @@ public class StoryActivity extends AppCompatActivity implements NavigationView.O
     }
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(this,VideoActivity.class);
-        this.startActivity(intent);
     }
 }

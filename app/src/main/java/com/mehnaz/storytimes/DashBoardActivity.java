@@ -1,30 +1,31 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FavoriteActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DashBoardActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,DashboardAdapter.ItemClickListener {
     @BindView(R.id.recyclerview)
     RecyclerView listView;
-    private FavoriteAdapter adapter;
+    private DashboardAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite);
+        setContentView(R.layout.activity_dash_board);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
@@ -44,7 +45,7 @@ public class FavoriteActivity extends AppCompatActivity implements NavigationVie
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
+        navigationView.setNavigationItemSelectedListener(this);
         successResult();
     }
     private void successResult()
@@ -57,7 +58,8 @@ public class FavoriteActivity extends AppCompatActivity implements NavigationVie
 
         int numberOfRows = 1;
         listView.setLayoutManager(new GridLayoutManager(this, numberOfRows));
-        adapter = new FavoriteAdapter(this, data);
+        adapter = new DashboardAdapter(this, data);
+        adapter.setClickListener(this);
         listView.setAdapter(adapter);
 
 
@@ -117,6 +119,7 @@ public class FavoriteActivity extends AppCompatActivity implements NavigationVie
         } else if (id == R.id.nav_search) {
             Intent intent = new Intent(this,SearchActivity.class);
             this.startActivity(intent);
+
         } else if (id == R.id.nav_favorite) {
             Intent intent = new Intent(this,FavoriteActivity.class);
             this.startActivity(intent);
@@ -151,10 +154,9 @@ public class FavoriteActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 
-
-
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent(this,StoryActivity.class);
+        this.startActivity(intent);
     }
 }

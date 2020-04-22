@@ -1,7 +1,6 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,22 +8,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
+public class EducationalAdapter extends RecyclerView.Adapter<EducationalAdapter.ViewHolder> {
     private String[] mData = new String[0];
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
-  Context context;
+    Context context;
     // data is passed into the constructor
-    public FavoriteAdapter(Context context, String[] data) {
+    public EducationalAdapter(Context context, String[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.context= context;
@@ -60,13 +57,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-        @BindView(R.id.imageView3)
         ImageView mImageButton;
         ViewHolder(View itemView) {
             super(itemView);
             myTextView =(TextView) itemView.findViewById(R.id.tvTitle);
+            mImageButton=(ImageView) itemView.findViewById(R.id.imageView3);
             ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(this);
+
         }
 
         @Override
@@ -81,7 +79,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     }
 
     // allows clicks events to be caught
-    public void setClickListener(FavoriteAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(EducationalAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
@@ -97,7 +95,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         PopupMenu popup = new PopupMenu(context,view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.dropdown_menu, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new EducationalAdapter.MyMenuItemClickListener());
         popup.show();
     }
 

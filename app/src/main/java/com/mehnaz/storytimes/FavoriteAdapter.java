@@ -1,4 +1,4 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
@@ -12,23 +12,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class RelatedStoryAdapter extends RecyclerView.Adapter<RelatedStoryAdapter.ViewHolder> {
+
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
     private String[] mData = new String[0];
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
-    Context context;
+  Context context;
     // data is passed into the constructor
-    public RelatedStoryAdapter(Context context, String[] data) {
+    public FavoriteAdapter(Context context, String[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
-        this.context=context;
+        this.context= context;
     }
 
     // inflates the cell layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.story_items, parent, false);
+        View view = mInflater.inflate(R.layout.favorite_items, parent, false);
         return new ViewHolder(view);
     }
 
@@ -37,7 +40,7 @@ public class RelatedStoryAdapter extends RecyclerView.Adapter<RelatedStoryAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         String animal = mData[position];
         holder.myTextView.setText(animal);
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        holder.mImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopupMenu(v);
@@ -55,11 +58,12 @@ public class RelatedStoryAdapter extends RecyclerView.Adapter<RelatedStoryAdapte
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-        ImageView imageView;
+        @BindView(R.id.imageView3)
+        ImageView mImageButton;
         ViewHolder(View itemView) {
             super(itemView);
             myTextView =(TextView) itemView.findViewById(R.id.tvTitle);
-             imageView=(ImageView) itemView.findViewById(R.id.imageView3);
+            ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(this);
         }
 
@@ -75,7 +79,7 @@ public class RelatedStoryAdapter extends RecyclerView.Adapter<RelatedStoryAdapte
     }
 
     // allows clicks events to be caught
-    public void setClickListener(RelatedStoryAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(FavoriteAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
@@ -91,7 +95,7 @@ public class RelatedStoryAdapter extends RecyclerView.Adapter<RelatedStoryAdapte
         PopupMenu popup = new PopupMenu(context,view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.dropdown_menu, popup.getMenu());
-        popup.setOnMenuItemClickListener(new RelatedStoryAdapter.MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
         popup.show();
     }
 

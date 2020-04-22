@@ -1,7 +1,6 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,16 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.ButterKnife;
 
-
-public class EducationalAdapter extends RecyclerView.Adapter<EducationalAdapter.ViewHolder> {
+public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ViewHolder> {
     private String[] mData = new String[0];
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     Context context;
     // data is passed into the constructor
-    public EducationalAdapter(Context context, String[] data) {
+    public DashboardAdapter(Context context, String[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.context= context;
@@ -31,7 +28,7 @@ public class EducationalAdapter extends RecyclerView.Adapter<EducationalAdapter.
     // inflates the cell layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.favorite_items, parent, false);
+        View view = mInflater.inflate(R.layout.story_items, parent, false);
         return new ViewHolder(view);
     }
 
@@ -58,14 +55,12 @@ public class EducationalAdapter extends RecyclerView.Adapter<EducationalAdapter.
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-        ImageView mImageButton;
+        ImageView  mImageButton;
         ViewHolder(View itemView) {
             super(itemView);
             myTextView =(TextView) itemView.findViewById(R.id.tvTitle);
             mImageButton=(ImageView) itemView.findViewById(R.id.imageView3);
-            ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(this);
-
         }
 
         @Override
@@ -80,7 +75,7 @@ public class EducationalAdapter extends RecyclerView.Adapter<EducationalAdapter.
     }
 
     // allows clicks events to be caught
-    public void setClickListener(EducationalAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(DashboardAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
@@ -96,7 +91,7 @@ public class EducationalAdapter extends RecyclerView.Adapter<EducationalAdapter.
         PopupMenu popup = new PopupMenu(context,view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.dropdown_menu, popup.getMenu());
-        popup.setOnMenuItemClickListener(new EducationalAdapter.MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new DashboardAdapter.MyMenuItemClickListener());
         popup.show();
     }
 

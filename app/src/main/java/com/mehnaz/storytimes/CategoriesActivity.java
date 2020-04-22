@@ -1,33 +1,30 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DashBoardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,DashboardAdapter.ItemClickListener {
+public class CategoriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,CategoriesAdapter.ItemClickListener {
     @BindView(R.id.recyclerview)
     RecyclerView listView;
-    private DashboardAdapter adapter;
+    private CategoriesAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dash_board);
+        setContentView(R.layout.activity_categories);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
@@ -55,12 +52,12 @@ public class DashBoardActivity extends AppCompatActivity
         // data to populate the RecyclerView with
         //  String[] data = {"Bousorama", "Bousorama", "Bousorama"};
 
-        String[] data = {"Gopal Var", "Humpty Dumpty", "Three little pigs","Sleeping Beauty"};
+        String[] data = {"Educational", "Motivational", "Tragedy","Comedy"};
 
 
         int numberOfRows = 1;
         listView.setLayoutManager(new GridLayoutManager(this, numberOfRows));
-        adapter = new DashboardAdapter(this, data);
+        adapter = new CategoriesAdapter(this, data);
         adapter.setClickListener(this);
         listView.setAdapter(adapter);
 
@@ -89,9 +86,7 @@ public class DashBoardActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+      
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -105,7 +100,7 @@ public class DashBoardActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
@@ -119,8 +114,6 @@ public class DashBoardActivity extends AppCompatActivity
             Intent intent = new Intent(this,CategoriesActivity.class);
             this.startActivity(intent);
         } else if (id == R.id.nav_search) {
-            Intent intent = new Intent(this,SearchActivity.class);
-            this.startActivity(intent);
 
         } else if (id == R.id.nav_favorite) {
             Intent intent = new Intent(this,FavoriteActivity.class);
@@ -156,9 +149,10 @@ public class DashBoardActivity extends AppCompatActivity
         return true;
     }
 
+
     @Override
     public void onItemClick(View view, int position) {
-        Intent intent = new Intent(this,StoryActivity.class);
+        Intent intent = new Intent(this,EducationalActivity.class);
         this.startActivity(intent);
     }
 }

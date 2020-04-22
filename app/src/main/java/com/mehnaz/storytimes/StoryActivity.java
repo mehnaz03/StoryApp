@@ -1,5 +1,6 @@
-package com.rfsoftlab.storyteller.storyteller;
+package com.mehnaz.storytimes;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,53 +9,69 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HelpActivity extends AppCompatActivity   implements NavigationView.OnNavigationItemSelectedListener {
+public class StoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,RelatedStoryAdapter.ItemClickListener, View.OnClickListener {
+    @BindView(R.id.recyclerviewStory)
+    RecyclerView listView;
 
+
+    @BindView(R.id.imageViewPlay)
+    ImageView videoPlay;
+    RelatedStoryAdapter adapter;
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_help);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_story);
         ButterKnife.bind(this);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.setDrawerIndicatorEnabled(false);
+        toggle.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),DashBoardActivity.class);
+                startActivity(intent);
+            }
 
-}
+        });
 
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        option();
     }
 
+
+    private void option()
+    {
+        String[] data = {"Hello World", "Gopal Var"};
+        int numberOfRows = 1;
+        listView.setLayoutManager(new GridLayoutManager(this, numberOfRows));
+        adapter = new RelatedStoryAdapter(this, data);
+        adapter.setClickListener((RelatedStoryAdapter.ItemClickListener) this);
+        listView.setAdapter(adapter);
+
+        videoPlay.setOnClickListener((View.OnClickListener) this);
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -80,7 +97,7 @@ public class HelpActivity extends AppCompatActivity   implements NavigationView.
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
@@ -130,10 +147,14 @@ public class HelpActivity extends AppCompatActivity   implements NavigationView.
         return true;
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
 
+    }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
+    public void onClick(View v) {
+        Intent intent = new Intent(this,VideoActivity.class);
+        this.startActivity(intent);
     }
 }
