@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/tvTitle"
             android:layout_below="@id/tvTitle"
-            android:text="Read by: Siddique Noor"
+            android:text="Read by: Mehnaz Hossain"
             android:layout_marginTop="@dimen/_5sdp"/>
 
         <TextView

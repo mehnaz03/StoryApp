@@ -9,36 +9,23 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp"
-        android:text="App developed by RFsoftLab"
+       android:layout_centerInParent="true"
+        android:text="App developed by Mehnaz Hossain"
         android:textSize="@dimen/_20sp"/>
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="108dp"
-        android:text="Website: http://rfsoftlab.com" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_above="@+id/textView16"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView9"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-170dp"
-        android:text="Email: info@rfsoftlab.com" />
+        android:text="Email: mehnazuiu@gmail.com" />
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/textView15"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="149dp"
-        android:text="Mobile: +88 01712 933024" />
+        android:text="Mobile: +88 016224190230" />
 </RelativeLayout>

@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
-        android:text="Story Teller"
+        android:text="Story Times"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_22sp" />
 
@@ -34,7 +34,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Siddique Noor"
+        android:text="Mehnaz Hossain"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_16sp"
         android:layout_marginStart="@dimen/_80sdp"
