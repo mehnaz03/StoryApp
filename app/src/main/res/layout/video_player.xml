@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="16dp"
-        android:text="Story Teller"
+        android:text="StoryTime"
         android:textStyle="bold"
         android:textSize="@dimen/_22sp"/>
 
