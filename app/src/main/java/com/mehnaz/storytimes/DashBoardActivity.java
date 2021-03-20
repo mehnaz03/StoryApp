@@ -2,17 +2,22 @@ package com.mehnaz.storytimes;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,19 +55,13 @@ public class DashBoardActivity extends AppCompatActivity
     }
     private void successResult()
     {
-        // data to populate the RecyclerView with
-        //  String[] data = {"Bousorama", "Bousorama", "Bousorama"};
-
         String[] data = {"Gopal Var", "Humpty Dumpty", "Three little pigs","Sleeping Beauty"};
-
 
         int numberOfRows = 1;
         listView.setLayoutManager(new GridLayoutManager(this, numberOfRows));
         adapter = new DashboardAdapter(this, data);
         adapter.setClickListener(this);
         listView.setAdapter(adapter);
-
-
 
 
     }

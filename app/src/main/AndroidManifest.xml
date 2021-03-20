@@ -11,13 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBarTheme">
+        <activity android:name=".RegistrationActivity"></activity>
         <activity android:name=".MainActivity" />
         <activity
             android:name=".DashBoardActivity"
             android:label="@string/app_name"
             android:theme="@style/NoActionBarTheme" />
-        <activity android:name="com.mehnaz.storytimes.StoryActivity" />
-        <activity android:name="com.mehnaz.storytimes.SeriesActivity" />
+        <activity android:name=".StoryActivity" />
+        <activity android:name=".SeriesActivity" />
         <activity android:name=".CategoriesActivity" />
         <activity android:name=".FavoriteActivity" />
         <activity android:name=".LoginActivity">
@@ -30,7 +31,7 @@
         <activity android:name=".HelpActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".VideoActivity" />
-        <activity android:name=".EducationalActivity"/>
+        <activity android:name=".EducationalActivity" />
     </application>
 
 </manifest>
